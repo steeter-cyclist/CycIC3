@@ -5,11 +5,11 @@ from sklearn.metrics import accuracy_score
 def compute_accuracy(args):
     mapping = load_origin_entailed_mapping(args.map)
 ​
-    origin_preds = load_predictions(args.origin_preds)
-    entailed_preds = load_predictions(args.entailed_preds)
+    origin_preds = load_predictions(args.cycic3a_preds)
+    entailed_preds = load_predictions(args.cycic3b_preds)
 ​
-    origin_labels = load_dataset_file(args.origin_labels)
-    entailed_labels = load_dataset_file(args.entailed_labels)
+    origin_labels = load_dataset_file(args.cycic3a_labels)
+    entailed_labels = load_dataset_file(args.cycic3b_labels)
     
     origin_accuracy = accuracy_score(origin_labels.correct_answer, origin_preds)
     entailed_accuracy = accuracy_score(entailed_labels.correct_answer, entailed_preds)
@@ -42,13 +42,13 @@ def load_predictions(filename):
 ​
 def main():
     parser = argparse.ArgumentParser(description="Evaluate prediction accuracy for entangled datasets")
-    parser.add_argument("--origin_labels", type=str, help="Labels (correct) for the origin data", required=True)
-    parser.add_argument("--origin_preds", type=str, help="Predictions for the origin data, one per line", required=True)
-    parser.add_argument("--entailed_labels", type=str, help="Labels (correct) for the entailed data", required=True)
-    parser.add_argument("--entailed_preds", type=str, help="Predictions for the entailed dataset, one per line", required=True)
-    parser.add_argument("--map", type=str, help="CSV file mapping origin run ids to entailed run ids.", required=True)
-    parser.add_argument("--origin_data", type=str, help="A jsonl dataset of commonsense questions", required=False)
-    parser.add_argument("--entailed_data", type=str, help="JSONL dataset of commonsense questions that ought to be answerable if the origin set is answerable.", required=False)
+    parser.add_argument("--cycic3a_labels", type=str, help="Labels (correct) for the cycic3a data", required=True)
+    parser.add_argument("--cycic3a_preds", type=str, help="Predictions for the cycic3a data, one per line", required=True)
+    parser.add_argument("--cycic3b_labels", type=str, help="Labels (correct) for the cycic3b data", required=True)
+    parser.add_argument("--cycic3b_preds", type=str, help="Predictions for the cycic3b dataset, one per line", required=True)
+    parser.add_argument("--map", type=str, help="CSV file mapping cycic3a run ids to cycic3b run ids.", required=True)
+    parser.add_argument("--cycic3a_data", type=str, help="A jsonl dataset of commonsense questions", required=False)
+    parser.add_argument("--cycic3b_data", type=str, help="JSONL dataset of commonsense questions that ought to be answerable if the cycic3a set is answerable.", required=False)
 ​
     args = parser.parse_args()
     compute_accuracy(args)
