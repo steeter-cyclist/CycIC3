@@ -17,9 +17,9 @@ def compute_accuracy(args):
     origin_correct_idx = accuracy_dataset.origin_prediction == accuracy_dataset.origin_label
     conditional_accuracy = accuracy_score(accuracy_dataset[origin_correct_idx]['entailed_label'],
                                           accuracy_dataset[origin_correct_idx]['entailed_prediction'])
-    print("Origin dataset accuracy:", origin_accuracy)
-    print("Entailed dataset accuracy:", entailed_accuracy)
-    print("Conditional accuracy (entailed | origin):", conditional_accuracy)
+    print("Dataset A accuracy:", origin_accuracy)
+    print("Dataset B accuracy:", entailed_accuracy)
+    print("Conditional accuracy (B correct | A correct):", conditional_accuracy)
 
 def compute_accuracy_dataset(origin_labels, origin_preds, entailed_labels, entailed_preds, mapping):
     # get a mapping of run_id -> label and prediction for each dataset
