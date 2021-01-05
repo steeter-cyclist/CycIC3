@@ -4,10 +4,10 @@ from sklearn.metrics import accuracy_score
 
 def compute_accuracy(args):
     mapping = load_origin_entailed_mapping(args.map)
-
+    
     origin_preds = load_predictions(args.cycic3a_preds)
     entailed_preds = load_predictions(args.cycic3b_preds)
-
+    
     origin_labels = load_dataset_file(args.cycic3a_labels)
     entailed_labels = load_dataset_file(args.cycic3b_labels)
     
@@ -49,7 +49,7 @@ def main():
     parser.add_argument("--map", type=str, help="CSV file mapping cycic3a run ids to cycic3b run ids.", required=True)
     parser.add_argument("--cycic3a_data", type=str, help="A jsonl dataset of commonsense questions", required=False)
     parser.add_argument("--cycic3b_data", type=str, help="JSONL dataset of commonsense questions that ought to be answerable if the cycic3a set is answerable.", required=False)
-
+    
     args = parser.parse_args()
     compute_accuracy(args)
 
