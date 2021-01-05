@@ -25,5 +25,6 @@ python3 evaluate_entangled.py \
 --cycic3a_preds=preds_a.lst \
 --cycic3b_preds=preds_b.lst \
 --cycic3a_labels=cycic3a_labels.jsonl \
---cycic3b_labels=cycic3b_labels.jsonl
+--cycic3b_labels=cycic3b_labels.jsonl \
+--map=cycic3_dev_question_map.csv
 ```
