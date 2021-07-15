@@ -1,6 +1,8 @@
 import pandas as pd
 import argparse
 from sklearn.metrics import accuracy_score
+from scipy.stats import pearsonr
+import numpy as np
 
 def compute_accuracy(args):
     mapping = load_origin_entailed_mapping(args.map)
@@ -17,9 +19,15 @@ def compute_accuracy(args):
     origin_correct_idx = accuracy_dataset.origin_prediction == accuracy_dataset.origin_label
     conditional_accuracy = accuracy_score(accuracy_dataset[origin_correct_idx]['entailed_label'],
                                           accuracy_dataset[origin_correct_idx]['entailed_prediction'])
+    entailed_correct_idx = accuracy_dataset.entailed_prediction == accuracy_dataset.entailed_label
+    r, p = pearsonr(origin_correct_idx, entailed_correct_idx) #note: this assumes a one-to-one mapping of origin to entailed. Could be extended to one-to-many by computing the average of entailed accuracy for each origin
     print("Dataset A accuracy:", origin_accuracy)
     print("Dataset B accuracy:", entailed_accuracy)
-    print("Conditional accuracy (B correct | A correct):", conditional_accuracy)
+    print("Conditional accuracy (B correct | A correct): {:.3f}".format(conditional_accuracy))
+    print("Pearson correlation r(A, B): {:.3f}".format(r))
+    print("p-value: {:.3f}".format(p))
+    #total percent where correct(A) matches correct(B)
+    print("Percent matching correctness: {:.3f}".format(np.sum(origin_correct_idx==entailed_correct_idx) / len(accuracy_dataset)))
 
 def compute_accuracy_dataset(origin_labels, origin_preds, entailed_labels, entailed_preds, mapping):
     # get a mapping of run_id -> label and prediction for each dataset
